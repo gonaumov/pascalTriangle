@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pascal triangle example</title>
+    <style>
+        div {
+            text-align: center;
+            line-height: 60px;
+        }
+
+        span {
+            border: 2px solid blue;
+            margin: 2px;
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            word-break: break-all;
+            text-align: center;
+            font-size: 20px;
+            overflow: hidden;
+            vertical-align: middle;
+            font-weight: bold;
+            animation: showel 1s;
+            -webkit-animation: showel 1s;
+        }
+
+        @-webkit-keyframes showel {
+            0% {
+                opacity: 0;
+                border-left: 0;
+                border-top: 0;
+                border-right: 0;
+                border-bottom: 0;
+            }
+            50% {
+                opacity: 1;
+                border-left: 0;
+                border-top: 0;
+                border-right: 0;
+                border-bottom: 0;
+            }
+            70% {
+                border-left: 0;
+                border-top: 0;
+                border-right: 0;
+                border-bottom: 0;
+            }
+            70% {
+                border-left: 2px solid blue;
+                border-top: 0;
+                border-right: 0;
+                border-bottom: 0;
+            }
+            80% {
+                border-left: 2px solid blue;
+                border-top: 2px solid blue;
+                border-right: 0;
+                border-bottom: 0;
+            }
+            90% {
+                border-left: 2px solid blue;
+                border-top: 2px solid blue;
+                border-right: 2px solid blue;
+                border-bottom: 0;
+            }
+            100% {
+                border-left: 2px solid blue;
+                border-top: 2px solid blue;
+                border-right: 2px solid blue;
+                border-bottom: 2px solid blue;
+            }
+        }
+
+        /* Standard syntax */
+        @keyframes showel {
+            0% {
+                opacity: 0;
+                border-left: 0;
+                border-top: 0;
+                border-right: 0;
+                border-bottom: 0;
+            }
+            50% {
+                opacity: 1;
+                border-left: 0;
+                border-top: 0;
+                border-right: 0;
+                border-bottom: 0;
+            }
+            70% {
+                border-left: 0;
+                border-top: 0;
+                border-right: 0;
+                border-bottom: 0;
+            }
+            70% {
+                border-left: 2px solid blue;
+                border-top: 0;
+                border-right: 0;
+                border-bottom: 0;
+            }
+            80% {
+                border-left: 2px solid blue;
+                border-top: 2px solid blue;
+                border-right: 0;
+                border-bottom: 0;
+            }
+            90% {
+                border-left: 2px solid blue;
+                border-top: 2px solid blue;
+                border-right: 2px solid blue;
+                border-bottom: 0;
+            }
+            100% {
+                border-left: 2px solid blue;
+                border-top: 2px solid blue;
+                border-right: 2px solid blue;
+                border-bottom: 2px solid blue;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="result">
+</div>
+<script>
+    var results = document.getElementById('result');
+    function factorial(n) {
+        return new Promise(function (resolve) {
+            (function _loop(n, r) {
+                setTimeout(function () {
+                    if (n == 0) {
+                        if (r == 0) {
+                            r = 1;
+                        }
+                        resolve(r);
+                    } else {
+                        if (r == 0) {
+                            r = n;
+                        } else {
+                            r = r * n;
+                        }
+                        _loop(--n, r);
+                    }
+                }.bind(this), 0);
+            }(n, 0));
+        });
+    }
+
+    function loop(z, a) {
+        if (!loop.oldAmount || loop.oldAmount != z) {
+            loop.oldAmount = z;
+            loop.resultsHolder = document.createElement('div');
+            results.appendChild(loop.resultsHolder);
+        }
+
+        Promise.all([(factorial(z)), (factorial(a)), (factorial(z - a))]).then(
+                function _promiseHandler(x) {
+                    evaluateResult((x[0] / (x[1] * x[2])));
+                }
+        );
+
+        function evaluateResult(result) {
+            var newSpan = document.createElement('span');
+            newSpan.innerHTML = result;
+            ['animationend',
+                'webkitAnimationEnd',
+                'oAnimationEnd'].forEach(function (eventTypeString, index, array) {
+                newSpan.addEventListener(eventTypeString, function _eventHandler(eventTypes) {
+                    if (a === z) {
+                        loop(++z, 0);
+                    } else if (a < z) {
+                        loop(z, ++a);
+                    }
+                    eventTypes.forEach(function (eventType) {
+                        this.removeEventListener(eventType, _eventHandler);
+                    });
+                }.bind(newSpan, array));
+            });
+
+            loop.resultsHolder.appendChild(newSpan);
+        }
+    }
+
+    loop(0, 0);
+</script>
+</body>
+</html>
