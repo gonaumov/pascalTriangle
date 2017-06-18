@@ -8,6 +8,10 @@
             background-color: black;
             color: white;
         }
+        a {
+            color: white;
+            font-weight: bold;
+        }
         div {
             text-align: center;
             line-height: 60px;
@@ -29,6 +33,26 @@
             -webkit-animation: showel 1s;
         }
 
+        #descriptionHolder, #descriptionHolder * {
+            text-align: left;
+        }
+
+        #description {
+            display: none;
+            padding: 0;
+            margin: 0;
+            width: 40%;
+            line-height: normal;
+            font-weight: bold;
+        }
+
+        #description:target {
+            display: block;
+            position: absolute;
+            animation: showel 1s;
+            -webkit-animation: showel 1s;
+        }
+
         @-webkit-keyframes showel {
             0% {
                 opacity: 0;
@@ -44,7 +68,7 @@
                 border-right: 0;
                 border-bottom: 0;
             }
-            70% {
+            60% {
                 border-left: 0;
                 border-top: 0;
                 border-right: 0;
@@ -92,7 +116,7 @@
                 border-right: 0;
                 border-bottom: 0;
             }
-            70% {
+            60% {
                 border-left: 0;
                 border-top: 0;
                 border-right: 0;
@@ -126,6 +150,18 @@
     </style>
 </head>
 <body>
+<div id="descriptionHolder">
+    <a href="#description">What is Pascal triangle?</a>
+    <div id="description">
+        The triangle of Pascal is something that is very often given as
+        task for programming courses or job interviews. The only rule
+        for forming the Pascal triangle is that it should contain
+        only the digit one on the borders and inside the triangle
+        each number should be equal to the sum of the above two
+        numbers. More about Pascal triangle can be viewed <a href="https://en.wikipedia.org/wiki/Pascal%27s_triangle" target="_blank">here</a>.
+        You can check code of this demonstration <a href="https://github.com/gonaumov/pascalTriangle" target="_blank">here</a>.
+    </div>
+</div>
 <div id="result">
 </div>
 <script>
